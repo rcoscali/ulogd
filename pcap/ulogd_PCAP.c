@@ -249,7 +249,7 @@ static void pcap_signal_handler(int signal)
 	}
 }
 
-static int pcap_init(void)
+static int local_pcap_init(void)
 {
 	/* FIXME: error handling */
 	config_parse_file("PCAP", &pcapsync_ce);
@@ -262,7 +262,7 @@ static int pcap_init(void)
 	return 0;
 }
 
-static void pcap_fini(void)
+static void local_pcap_fini(void)
 {
 	if (of)
 		fclose(of);
@@ -270,8 +270,8 @@ static void pcap_fini(void)
 
 static ulog_output_t pcap_op = {
 	.name = "pcap", 
-	.init = &pcap_init,
-	.fini = &pcap_fini,
+	.init = &local_pcap_init,
+	.fini = &local_pcap_fini,
 	.output = &pcap_output,
 	.signal = &pcap_signal_handler,
 };
